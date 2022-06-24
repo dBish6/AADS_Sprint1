@@ -1,5 +1,7 @@
 // 1. push(), 2. pop() 3. peek() 4. isempty() 5. size() 6. clear() 7. toString()
-
+const fs = require("fs");
+const fsPromises = require("fs").promises;
+const path = require("path");
 class Stack {
   constructor() {
     this.items = [];
@@ -15,8 +17,8 @@ class Stack {
   }
 
   // Removing an element from the back of the stack.
-  pop() {
-    if (this.count === 0) {
+  pop() { 
+    if (this.count === this.item) {
       return undefined;
     }
     let deleteItem = this.items[this.count - 1];
@@ -47,22 +49,39 @@ class Stack {
   }
 }
 
-//   const stack = new Stack();
-//   stack.push(100);
-//   stack.push(200);
-//   stack.push(300);
-//   stack.push(400);
-//   stack.push(500);
-//   stack.push(600);
+let Agent = { 
+  data: '2 Days to complete',
+  AgentID: '007', 
+  StructureID: '1947',
+  LocationID: '5'
+};
 
-//   stack.pop();
+fs.writeFileSync(path.resolve(__dirname, "json", 'stack.json'), JSON.stringify(Agent));
 
-//   stack.toString();
+var data = {}
+data.table = []
+for (i=0; i <26 ; i++){
+ var obj = {
+     id: i,
+     square: i * i
+ }
+ data.table.push(obj)
+}
 
-//   stack.peek();
 
-//   console.log("");
+const stack = new Stack();
+stack.push("man");
+stack.push("women");
+stack.push("chicken");
+stack.push("velociraptor");
+stack.push("Building");
+stack.push("Joe");
 
+stack.pop();
+stack.toString();
+stack.peek();
+console.log("");
+console.log(Agent);
 module.exports = {
-  Stack: Stack,
+  Stack: Stack,  
 };
