@@ -1,1 +1,6 @@
-{"data":"2 Days to complete","AgentID":"007","StructureID":"1947","LocationID":"5"}
+{
+  "data": "2 Days to complete",
+  "AgentID": "007",
+  "StructureID": "1947",
+  "LocationID": "5"
+}

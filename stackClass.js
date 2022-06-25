@@ -56,7 +56,9 @@ let Agent = {
   LocationID: '5'
 };
 
-fs.writeFileSync(path.resolve(__dirname, "json", 'stack.json'), JSON.stringify(Agent));
+let newAgent = Agent
+
+fs.writeFileSync(path.resolve(__dirname, "json", 'stack.json'), JSON.stringify(Agent, null, 2));
 
 var data = {}
 data.table = []
@@ -68,19 +70,18 @@ for (i=0; i <26 ; i++){
  data.table.push(obj)
 }
 
+// const stack = new Stack();
+// stack.push("man");
+// stack.push("women");
+// stack.push("chicken");
+// stack.push("velociraptor");
+// stack.push("Building");
+// stack.push("Joe");
 
-const stack = new Stack();
-stack.push("man");
-stack.push("women");
-stack.push("chicken");
-stack.push("velociraptor");
-stack.push("Building");
-stack.push("Joe");
-
-stack.pop();
-stack.toString();
-stack.peek();
-console.log("");
+// stack.pop();
+// stack.toString();
+// stack.peek();
+// console.log("");
 console.log(Agent);
 module.exports = {
   Stack: Stack,  
