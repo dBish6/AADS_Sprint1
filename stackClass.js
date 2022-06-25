@@ -1,5 +1,9 @@
 // 1. push(), 2. pop() 3. peek() 4. isempty() 5. size() 6. clear() 7. toString()
 
+const fs = require("fs");
+const fsPromises = require("fs").promises;
+const path = require("path");
+const readline = require("readline");
 class Stack {
   constructor() {
     this.items = [];
@@ -46,6 +50,70 @@ class Stack {
     }
   }
 }
+
+const stack = new Stack();
+
+let Agent = {
+  data: "2 Days to complete",
+  AgentID: "007",
+  StructureID: "1947",
+  LocationID: "5",
+};
+
+// fs.writeFileSync(
+//   path.join(__dirname, "json", "stack.json"),
+//   JSON.stringify(Agent, null, 2)
+// );
+
+// var data = {};
+// data.table = [];
+// for (i = 0; i < 26; i++) {
+//   var obj = {
+//     id: i,
+//     square: i * i,
+//   };
+
+// data.table.push(obj);
+// }
+
+const retreiveOut = async () => {
+  try {
+    if (
+      fs.readFileSync(
+        path.join(__dirname, "json", "retreived.json"),
+        "utf-8"
+      ) == ""
+    ) {
+      let message = [];
+
+      message.push(Agent);
+
+      let retreive = JSON.stringify(message, null, 2);
+
+      await fsPromises.writeFile(
+        path.join(__dirname, "json", "retreived.json"),
+        retreive
+      );
+    } else {
+      const data = await fsPromises.readFile(
+        path.join(__dirname, "json", "retreived.json")
+      );
+      let message = JSON.parse(data);
+
+      message.push(message);
+
+      let retreive = JSON.stringify(message, null, 2);
+
+      await fsPromises.writeFile(
+        path.join(__dirname, "json", "retreived.json"),
+        retreive
+      );
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+retreiveOut();
 
 //   const stack = new Stack();
 //   stack.push(100);
