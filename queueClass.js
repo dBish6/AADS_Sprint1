@@ -51,7 +51,6 @@ class Queue {
     this.lowestCount = 0;
   }
 
-  // Broken
   toString() {
     if (this.isEmpty()) {
       return "";
@@ -64,17 +63,26 @@ class Queue {
   }
 }
 
-// const queue = new Queue();
-// queue.enqueue("Bim");
-// queue.enqueue("Bo");
-// queue.enqueue("Baggins");
-// queue.enqueue("Yeehaw");
 
-// console.log(queue.size());
-// console.log(queue.toString());
-// console.log(queue.dequeue());
-// console.log(queue.size());
-// console.log(queue.toString());
+
+const queue = new Queue();
+queue.enqueue("Man Wearing Black");
+queue.enqueue("21st Street");
+queue.enqueue("Silinced 1911");
+queue.enqueue("Parking Garage on 44th");
+queue.enqueue("Big Man");
+
+console.log(queue.size());
+console.log(queue.toString());
+console.log(queue.dequeue());
+console.log(queue.size());
+console.log(queue.toString());
+console.log(queue.dequeue());
+console.log(queue.size());
+console.log(queue.toString());
+console.log(queue.dequeue());
+console.log(queue.size());
+console.log(queue.toString());
 
 module.exports = {
   Queue: Queue,
