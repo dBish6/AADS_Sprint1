@@ -1,8 +1,12 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const url = require("url");
 
-const port = 3069;
+const { agentRequestStack, agentRetrieveStack } = require("./stackVersion");
+// const { agentRequestQueue } = require("./queueVersion");
+
+const port = 3070;
 
 const server = http.createServer((req, res) => {
   console.log(req.method, req.url);
@@ -12,7 +16,7 @@ const server = http.createServer((req, res) => {
     res.statusCode = 200;
     displayFile(htmlPath);
   } else if (req.url === "sendQueue") {
-    let htmlPath = path.join(__dirname, "formStack.html");
+    let htmlPath = path.join(__dirname, "formQueue.html");
     res.statusCode = 200;
     displayFile(htmlPath);
   } else if (req.url.match("/requestQueue")) {
@@ -28,23 +32,30 @@ const server = http.createServer((req, res) => {
     });
   } else if (req.url === "/retrieveQueue") {
     // function
+    //
+    //
   } else if (req.url === "/sendStack") {
-    let htmlPath = path.join(__dirname, "public", "form.html");
+    let htmlPath = path.join(__dirname, "formStack.html");
     res.statusCode = 200;
     displayFile(htmlPath);
   } else if (req.url.match("/requestStack")) {
     const form_data = url.parse(req.url, true).query;
     // From the newToken function, pass in the names from the form as functions parameters.
-    const token = newToken(
+    const messageReq = agentRequestStack(
       form_data.message,
       form_data.agentID,
       form_data.structureID
     );
-    token.then((data) => {
-      res.end(`New token was created!\n\n ${JSON.stringify(data, null, 2)}`);
+    messageReq.then((data) => {
+      res.end(
+        `Message Request Loud and Clear!\n\n ${JSON.stringify(data, null, 2)}`
+      );
     });
   } else if (req.url === "/retrieveStack") {
-    // function
+    const messageRetrive = agentRetrieveStack();
+    messageRetrive.then((data) => {
+      res.end(JSON.stringify(data, null, 2));
+    });
   } else {
     res.writeHead(404, { "Content-Type": "text/plain" });
     res.write("404 Not Found");
