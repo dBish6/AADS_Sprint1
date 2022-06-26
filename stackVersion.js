@@ -27,6 +27,7 @@ const agentRequestStack = async (message, agentID, structureID) => {
       // Were not doing anything with the stack?
       // array.push(stack1);
       stack.items = stack1;
+      obj = stack1;
       // stack.push(message);
       console.log(stack1);
 
@@ -89,6 +90,7 @@ const agentRetrieveStack = async () => {
     stack.items = messages;
     const remove = stack.pop();
 
+    // Probably could of done new Object();
     let obj = {};
     obj.AgentID = remove.AgentID;
     obj.StructureID = remove.StructureID;
