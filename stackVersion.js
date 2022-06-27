@@ -17,21 +17,28 @@ const agentRequestStack = async (message, agentID, structureID) => {
     if (
       fs.readFileSync(path.join(__dirname, "json", "stack.json"), "utf-8") == ""
     ) {
-      let obj = {};
+      // let obj = {};
       // let array = [];
       const stack = new Stack.Stack();
       // Adding to the Stack.
 
-      let stack1 = stack.push(agent);
+      // for(i = 0; i < )
+      stack.push(agent);
+      const remove = stack.pop();
 
+      // Probably could of done new Object();
+      let obj = new Object();
+      obj.data = remove.data;
+      obj.AgentID = remove.AgentID;
+      obj.StructureID = remove.StructureID;
       // Were not doing anything with the stack?
       // array.push(stack1);
-      stack.items = stack1;
-      obj = stack1;
+      // stack.items = stack1;
+      // obj = stack1;
       // stack.push(message);
-      console.log(stack1);
+      console.log(obj);
 
-      let messageJSON = JSON.stringify(agent, null, 2);
+      let messageJSON = JSON.stringify(obj, null, 2);
 
       await fsPromises.writeFile(
         path.join(__dirname, "json", "stack.json"),
@@ -42,12 +49,20 @@ const agentRequestStack = async (message, agentID, structureID) => {
         path.join(__dirname, "json", "stack.json")
       );
 
+      //for(i = 0; i < )
       let agents = JSON.parse(data);
+
       const stack = new Stack.Stack();
+      stack.items = agents;
+      const remove = stack.pop();
+      //  for (i = 0; i < )
+      let obj = new Object();
+      obj.data = remove.data;
+      obj.AgentID = remove.AgentID;
+      obj.StructureID = remove.StructureID;
+      console.log(obj);
 
-      stack.push(agent);
-
-      let messageJSON = JSON.stringify(agents, null, 2);
+      let messageJSON = JSON.stringify(obj, null, 2);
 
       await fsPromises.writeFile(
         path.join(__dirname, "json", "stack.json"),
@@ -90,10 +105,12 @@ const agentRetrieveStack = async () => {
     stack.items = messages;
     const remove = stack.pop();
 
-    // Probably could of done new Object();
-    let obj = {};
+    let obj = new Object();
     obj.AgentID = remove.AgentID;
     obj.StructureID = remove.StructureID;
+
+    // Pop out the last one in the stack somehow when the agent retrieved.
+    obj.pop();
   } catch (err) {
     console.log(err);
   }

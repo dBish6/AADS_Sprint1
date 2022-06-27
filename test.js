@@ -18,13 +18,22 @@ const agentRequestStack = async (message, agentID, structureID) => {
   const stack = new Stack.Stack();
   // Adding to the Stack.
 
-  let stack1 = stack.push(agent);
+  const s = stack.push(agent);
+  stack.push(agent.data);
+  stack.push(agent.AgentID);
+  stack.push(agent.StructureID);
+
+  //   stack.items = messages;
+  //   const remove = stack.pop();
+
+  obj = s;
 
   // Were not doing anything with the stack?
   // array.push(stack1);
   //   obj = stack1;
   // stack.push(message);
-  console.log(stack1);
+  //   console.log(stack1);
+  console.log(obj);
 };
 
 agentRequestStack("yo", 007, 23);
