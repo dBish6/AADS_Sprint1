@@ -1,9 +1,3 @@
-// [3,4,6,7,8] => [8,7,8,4,3] - Stack implaments backwards
-// [3,4,6,7,8] => [3,4,6,7,8] - Queues do the same.
-
-// var arr = []
-
-// Queues are more flexable then stacks.
 // First in first out (FIFO).
 
 class Queue {
@@ -12,9 +6,6 @@ class Queue {
     this.lowestCount = 0;
     this.count = 0;
   }
-  // var arr = [] => arr[0] = 2
-  // var arr = [2] => arr[1] = 3
-  // var arr = [2, 3]
 
   // Adding from the front.
   enqueue(element) {
@@ -22,7 +13,7 @@ class Queue {
     this.count++;
   }
 
-  // Removes from the front.
+  // Removes the last one.
   dequeue() {
     if (this.isEmpty()) {
       return undefined;
@@ -63,18 +54,6 @@ class Queue {
     return objString;
   }
 }
-
-// const queue = new Queue();
-// queue.enqueue("Bim");
-// queue.enqueue("Bo");
-// queue.enqueue("Baggins");
-// queue.enqueue("Yeehaw");
-
-// console.log(queue.size());
-// console.log(queue.toString());
-// console.log(queue.dequeue());
-// console.log(queue.size());
-// console.log(queue.toString());
 
 module.exports = {
   Queue: Queue,

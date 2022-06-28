@@ -46,23 +46,57 @@ const agentRequestQueue = async (message, agentID, structureID) => {
       console.log(queue.items);
 
       let messageJSON = JSON.stringify(queue.items, null, 2);
+      console.log(messageJSON);
       await fsPromises.writeFile(
         path.join(__dirname, "json", "queue.json"),
         messageJSON
       );
     }
+    console.log(`Message was retreived, ${agent.AgentID}.`);
   } catch (err) {
     console.log(err);
   }
 };
 
-// Poping "data:" out of the stack.
+// dequeue "data:" out of the queue and from the file.
 const agentRetrieveQueue = async () => {
   let obj = new Object();
   try {
+    const data = await fsPromises.readFile(
+      path.join(__dirname, "json", "queue.json")
+    );
+
+    let messages = JSON.parse(data);
+    const queue = new Queue.Queue();
+    queue.items = messages;
+    queue.count = messages.length;
+    queue.lowestCount = 0;
+    const remove = queue.dequeue();
+
+    obj.AgentID = remove.AgentID;
+    obj.StructureID = remove.StructureID;
+
+    // console.log("queue items:");
+    // console.log(queue.items);
+
+    let newItems = [];
+
+    // lowestCount is one.
+    for (let i = queue.lowestCount; i < queue.count; i++) {
+      newItems.push(queue.items[i]);
+    }
+    let messageJSON = JSON.stringify(newItems, null, 2);
+    // console.log(messageJSON);
+
+    await fsPromises.writeFile(
+      path.join(__dirname, "json", "queue.json"),
+      messageJSON
+    );
+    console.log(`Message SELF DESTRUCT, ${obj.AgentID}.`);
   } catch (err) {
     console.log(err);
   }
+  return obj;
 };
 
 module.exports = {

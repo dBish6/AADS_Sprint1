@@ -47,6 +47,7 @@ const agentRequestStack = async (message, agentID, structureID) => {
       console.log(stack.items);
 
       let messageJSON = JSON.stringify(stack.items, null, 2);
+      console.log(messageJSON);
       await fsPromises.writeFile(
         path.join(__dirname, "json", "stack.json"),
         messageJSON
@@ -58,7 +59,7 @@ const agentRequestStack = async (message, agentID, structureID) => {
   }
 };
 
-// Poping "data:" out of the stack.
+// Poping "data:" out of the stack and from the file.
 const agentRetrieveStack = async () => {
   let obj = new Object();
   try {
@@ -75,7 +76,7 @@ const agentRetrieveStack = async () => {
     obj.AgentID = remove.AgentID;
     obj.StructureID = remove.StructureID;
 
-    // Copy: stack.items *into* newItems *sup to* tack.count number of items.
+    // Copy: stack.items *into* newItems *up to* stack.count number of items.
     let newItems = [];
 
     for (let i = 0; i < stack.count; i++) {
@@ -83,7 +84,6 @@ const agentRetrieveStack = async () => {
     }
 
     let messageJSON = JSON.stringify(newItems, null, 2);
-
     await fsPromises.writeFile(
       path.join(__dirname, "json", "stack.json"),
       messageJSON

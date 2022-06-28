@@ -4,7 +4,7 @@ const path = require("path");
 const url = require("url");
 
 const { agentRequestStack, agentRetrieveStack } = require("./stackVersion");
-const { agentRequestQueue } = require("./queueVersion");
+const { agentRequestQueue, agentRetrieveQueue } = require("./queueVersion");
 
 const port = 3070;
 
@@ -29,9 +29,10 @@ const server = http.createServer((req, res) => {
     );
     res.end(`Message Request Loud and Clear!`);
   } else if (req.url === "/retrieveQueue") {
-    // function
-    //
-    //
+    const messageRetrieve = agentRetrieveQueue();
+    messageRetrieve.then((data) => {
+      res.end(JSON.stringify(data, null, 2));
+    });
   } else if (req.url === "/sendStack") {
     let htmlPath = path.join(__dirname, "formStack.html");
     res.statusCode = 200;
@@ -46,8 +47,8 @@ const server = http.createServer((req, res) => {
     );
     res.end("Message Request Loud and Clear!");
   } else if (req.url === "/retrieveStack") {
-    const messageRetrive = agentRetrieveStack();
-    messageRetrive.then((data) => {
+    const messageRetrieve = agentRetrieveStack();
+    messageRetrieve.then((data) => {
       res.end(JSON.stringify(data, null, 2));
     });
   } else {
