@@ -12,7 +12,7 @@ class Stack {
     return this.count - 1;
   }
 
-  // Removing an element from the back of the stack.
+  // Removing an element from the back of the stack (Front).
   pop() {
     if (this.count === 0) {
       return undefined;

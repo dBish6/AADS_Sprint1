@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Queue Form</title>
+  </head>
+  <body>
+    <h2>Greatings Agent!</h2>
+    <p>Ready to start a queue?</p>
+    <form id="form" action="/requestQueue">
+      <div class="field">
+        <label for="username">Message:</label>
+        <input
+          type="text"
+          name="message"
+          id="message"
+          placeholder="Enter Your Message"
+        />
+      </div>
+      <div class="field">
+        <label for="username">Agent ID:</label>
+        <input
+          type="text"
+          name="agentID"
+          id="agentID"
+          placeholder="Enter Your ID"
+        />
+      </div>
+      <div class="field">
+        <label for="username">Structure ID:</label>
+        <input
+          type="text"
+          name="structureID"
+          id="structureID"
+          placeholder="Current Location Number"
+        />
+      </div>
+      <div class="field">
+        <button type="submit" id="btn">Generate</button>
+      </div>
+    </form>
+  </body>
+</html>

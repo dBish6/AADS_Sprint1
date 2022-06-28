@@ -1,0 +1,22 @@
+[
+  {
+    "data": "gafsdr",
+    "AgentID": "123",
+    "StructureID": "312"
+  },
+  {
+    "data": "fred",
+    "AgentID": "312",
+    "StructureID": "3213"
+  },
+  {
+    "data": "tt",
+    "AgentID": "312",
+    "StructureID": "3213"
+  },
+  {
+    "data": "312",
+    "AgentID": "312",
+    "StructureID": "321"
+  }
+]

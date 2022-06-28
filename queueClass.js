@@ -15,6 +15,7 @@ class Queue {
   // var arr = [] => arr[0] = 2
   // var arr = [2] => arr[1] = 3
   // var arr = [2, 3]
+
   // Adding from the front.
   enqueue(element) {
     this.items[this.count] = element;
@@ -51,7 +52,6 @@ class Queue {
     this.lowestCount = 0;
   }
 
-  // Broken
   toString() {
     if (this.isEmpty()) {
       return "";

@@ -4,8 +4,6 @@ const path = require("path");
 
 const Stack = require("./stackClass");
 
-// (message, agentID, structureID)
-
 // Request from server.
 const agentRequestStack = async (message, agentID, structureID) => {
   let agent = {
@@ -14,32 +12,19 @@ const agentRequestStack = async (message, agentID, structureID) => {
     StructureID: structureID,
   };
   try {
-    if (
-      fs.readFileSync(path.join(__dirname, "json", "stack.json"), "utf-8") == ""
-    ) {
-      // let obj = {};
-      // let array = [];
+    if (!fs.existsSync(path.join(__dirname, "json", "stack.json"))) {
+      fs.openSync(path.join(__dirname, "json", "stack.json"), "w");
+
+      // Adding to the stack.
       const stack = new Stack.Stack();
-      // Adding to the Stack.
 
-      // for(i = 0; i < )
       stack.push(agent);
-      const remove = stack.pop();
 
-      // Probably could of done new Object();
-      let obj = new Object();
-      obj.data = remove.data;
-      obj.AgentID = remove.AgentID;
-      obj.StructureID = remove.StructureID;
-      // Were not doing anything with the stack?
-      // array.push(stack1);
-      // stack.items = stack1;
-      // obj = stack1;
-      // stack.push(message);
-      console.log(obj);
+      console.log("stack items:");
+      console.log(stack.items);
 
-      let messageJSON = JSON.stringify(obj, null, 2);
-
+      let messageJSON = JSON.stringify(stack.items, null, 2);
+      console.log(messageJSON);
       await fsPromises.writeFile(
         path.join(__dirname, "json", "stack.json"),
         messageJSON
@@ -49,52 +34,33 @@ const agentRequestStack = async (message, agentID, structureID) => {
         path.join(__dirname, "json", "stack.json")
       );
 
-      //for(i = 0; i < )
       let agents = JSON.parse(data);
-
+      console.log("Agents:");
+      console.log(agents);
       const stack = new Stack.Stack();
       stack.items = agents;
-      const remove = stack.pop();
-      //  for (i = 0; i < )
-      let obj = new Object();
-      obj.data = remove.data;
-      obj.AgentID = remove.AgentID;
-      obj.StructureID = remove.StructureID;
-      console.log(obj);
+      // Just to tell the stack how many items are there.
+      stack.count = agents.length;
 
-      let messageJSON = JSON.stringify(obj, null, 2);
+      stack.push(agent);
+      console.log("stack items:");
+      console.log(stack.items);
 
+      let messageJSON = JSON.stringify(stack.items, null, 2);
       await fsPromises.writeFile(
         path.join(__dirname, "json", "stack.json"),
         messageJSON
       );
     }
-
-    // Removing from the Stack
-    // const selfDestruct = async () => {
-    //   // await fsPromises.rm(path.join(__dirname, "json", "stack.json"), {
-    //   //   force: true,
-    //   // });
-    //   const agent = await fsPromises.readFile(
-    //     path.join(__dirname, "json", "stack.json")
-    //   );
-    //   message = JSON.parse(agent);
-    //   stack.pop(message);
-
-    //   console.log("Message will self destruct in 5 seconds!");
-    //   setTimeout(selfDestruct, 5000);
-    //   console.log;
-    // };
-
     console.log(`Message was retreived, ${agent.AgentID}.`);
   } catch (err) {
     console.error(err);
   }
-  // return messageJSON;
 };
 
 // Poping "data:" out of the stack.
 const agentRetrieveStack = async () => {
+  let obj = new Object();
   try {
     const data = await fsPromises.readFile(
       path.join(__dirname, "json", "stack.json")
@@ -103,84 +69,31 @@ const agentRetrieveStack = async () => {
     let messages = JSON.parse(data);
     const stack = new Stack.Stack();
     stack.items = messages;
+    stack.count = messages.length;
     const remove = stack.pop();
 
-    let obj = new Object();
     obj.AgentID = remove.AgentID;
     obj.StructureID = remove.StructureID;
 
-    // Pop out the last one in the stack somehow when the agent retrieved.
-    obj.pop();
+    // Copy: stack.items *into* newItems *sup to* tack.count number of items.
+    let newItems = [];
+
+    for (let i = 0; i < stack.count; i++) {
+      newItems.push(stack.items[i]);
+    }
+
+    let messageJSON = JSON.stringify(newItems, null, 2);
+
+    await fsPromises.writeFile(
+      path.join(__dirname, "json", "stack.json"),
+      messageJSON
+    );
+    console.log(`Message SELF DESTRUCT, ${obj.AgentID}.`);
   } catch (err) {
     console.log(err);
   }
   return obj;
 };
-
-// const agentRequestStack = async () => {
-//   let agent = JSON.parse(`{
-//     "data": "2 Days to complete",
-//     "AgentID": "007",
-//     "StructureID": "1947"
-//     }`);
-//   try {
-
-//     if (
-//       fs.readFileSync(path.join(__dirname, "json", "stack.json"), "utf-8") == ""
-//     ) {
-//       let requests = [];
-//       let message = requests.push(agent);
-//       // stack.push(message.data);
-//       // stack.push(message.AgentID);
-//       // stack.push(message.StructureID)
-//       stack.push(message);
-//       console.log(message);
-
-//       let messageJSON = JSON.stringify(agent, null, 2);
-
-//       await fsPromises.writeFile(
-//         path.join(__dirname, "json", "stack.json"),
-//         messageJSON
-//       );
-//     } else {
-//       // const agent = await fsPromises.readFile(
-//       //   path.join(__dirname, "json", "stack.json")
-//       // );
-//       // let message = JSON.parse(agent);
-
-//       stack.push(message);
-
-//       console.log(message);
-
-//       let messageJSON = JSON.stringify(message, null, 2);
-
-//       await fsPromises.writeFile(
-//         path.join(__dirname, "json", "stack.json"),
-//         messageJSON
-//       );
-
-//       const selfDestruct = async () => {
-//         // await fsPromises.rm(path.join(__dirname, "json", "stack.json"), {
-//         //   force: true,
-//         // });
-//           const agent = await fsPromises.readFile(
-//        path.join(__dirname, "json", "stack.json")
-//       );
-//       message = JSON.parse(agent);
-//       stack.pop(message)
-
-//       console.log("Message will self destruct in 5 seconds!")
-//         setTimeout(selfDestruct, 5000);
-//         console.log;
-
-//       };
-//     }
-//     console.log(`Message was retreived, ${agent.AgentID}.`);
-//   } catch (err) {
-//     console.error(err);
-//   }
-//   return messageJSON;
-// };
 
 module.exports = {
   agentRequestStack,
