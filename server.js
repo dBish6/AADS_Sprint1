@@ -21,7 +21,6 @@ const server = http.createServer((req, res) => {
     displayFile(htmlPath);
   } else if (req.url.match("/requestQueue")) {
     const form_data = url.parse(req.url, true).query;
-    // From the newToken function, pass in the names from the form as functions parameters.
     agentRequestQueue(
       form_data.message,
       form_data.agentID,
@@ -39,7 +38,6 @@ const server = http.createServer((req, res) => {
     displayFile(htmlPath);
   } else if (req.url.match("/requestStack")) {
     const form_data = url.parse(req.url, true).query;
-    // From the newToken function, pass in the names from the form as functions parameters.
     agentRequestStack(
       form_data.message,
       form_data.agentID,
