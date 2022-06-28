@@ -76,7 +76,7 @@ const agentRetrieveStack = async () => {
     obj.AgentID = remove.AgentID;
     obj.StructureID = remove.StructureID;
 
-    // Copy: stack.items *into* newItems *up to* stack.count number of items.
+    // stack.items *into* newItems *up to* stack.count number of items.
     let newItems = [];
 
     for (let i = 0; i < stack.count; i++) {
